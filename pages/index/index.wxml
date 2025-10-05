@@ -1,0 +1,91 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+  <!-- 用户信息区域 -->
+  <view class="user-section">
+    <view class="user-card" wx:if="{{hasUserInfo}}">
+      <image class="user-avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="user-info">
+        <text class="user-name">{{userInfo.nickname || '微信用户'}}</text>
+        <text class="user-phone" wx:if="{{userInfo.phone}}">{{userInfo.phone}}</text>
+      </view>
+    </view>
+
+    <!-- 登录按钮 -->
+    <view class="login-section" wx:if="{{!hasUserInfo}}">
+      <button class="login-btn {{loading ? 'loading' : ''}}" bindtap="handleLogin" disabled="{{loading}}">
+        {{loading ? '登录中...' : '点击授权登录'}}
+      </button>
+      <text class="login-tips">登录后可快速发布需求</text>
+    </view>
+  </view>
+
+  <!-- 统计数据区域 -->
+  <view class="stats-section" wx:if="{{hasUserInfo}}">
+    <view class="stats-card">
+      <text class="stats-number">{{stats.totalDemands}}</text>
+      <text class="stats-label">总需求</text>
+    </view>
+    <view class="stats-card">
+      <text class="stats-number">{{stats.pendingDemands}}</text>
+      <text class="stats-label">待处理</text>
+    </view>
+    <view class="stats-card">
+      <text class="stats-number">{{stats.matchedDemands}}</text>
+      <text class="stats-label">已匹配</text>
+    </view>
+  </view>
+
+  <!-- 快捷操作区域 -->
+  <view class="actions-section">
+    <view class="section-title">快捷操作</view>
+    <view class="actions-grid">
+      <view
+        class="action-item"
+        wx:for="{{quickActions}}"
+        wx:key="action"
+        data-action="{{item.action}}"
+        bindtap="handleQuickAction"
+      >
+        <view class="action-icon">{{item.icon}}</view>
+        <text class="action-title">{{item.title}}</text>
+        <text class="action-desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 服务介绍区域 -->
+  <view class="service-section">
+    <view class="section-title">服务介绍</view>
+    <view class="service-card">
+      <view class="service-item">
+        <text class="service-icon">🎯</text>
+        <view class="service-content">
+          <text class="service-title">精准匹配</text>
+          <text class="service-desc">根据需求匹配最适合的家教老师</text>
+        </view>
+      </view>
+      <view class="service-item">
+        <text class="service-icon">🔒</text>
+        <view class="service-content">
+          <text class="service-title">安全可靠</text>
+          <text class="service-desc">所有老师均经过严格审核认证</text>
+        </view>
+      </view>
+      <view class="service-item">
+        <text class="service-icon">⚡</text>
+        <view class="service-content">
+          <text class="service-title">快速响应</text>
+          <text class="service-desc">提交需求后24小时内联系您</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部悬浮按钮 -->
+  <view class="floating-actions" wx:if="{{hasUserInfo}}">
+    <button class="float-btn primary" bindtap="goToSubmit">
+      <text class="btn-icon">📝</text>
+      <text>发布需求</text>
+    </button>
+  </view>
+</view>

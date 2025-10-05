@@ -1,0 +1,62 @@
+# Claude 相关
+.claude/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 环境变量
+.env
+.env.local
+.env.production
+
+# 后端
+backend/node_modules/
+backend/.env
+backend/dist/
+backend/uploads/
+backend/logs/
+
+# 管理后台
+admin/node_modules/
+admin/dist/
+admin/.vite/
+admin/.env
+admin/.env.local
+
+# 微信小程序
+miniprogram_npm/
+.DS_Store
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系统文件
+Thumbs.db
+Desktop.ini
+
+# 日志
+*.log
+
+# 数据库
+*.sql
+*.sqlite
+*.db
+
+# Prisma
+backend/prisma/migrations/**/*.sql
+
+# 构建产物
+dist/
+build/
+*.tsbuildinfo
+
+# 临时文件
+tmp/
+temp/

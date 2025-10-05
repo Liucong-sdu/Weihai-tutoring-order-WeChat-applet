@@ -1,0 +1,62 @@
+<!-- pages/demand/submit.wxml -->
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="title">发布家教需求</text>
+    <text class="subtitle">请填写您的需求信息，我们会尽快为您匹配合适的家教老师</text>
+  </view>
+  <!-- 表单内容 -->
+  <view class="form-section">
+    <!-- 联系电话 -->
+    <view class="form-item">
+      <text class="label required">联系电话</text>
+      <input class="input" type="number" placeholder="请填写您的手机号" value="{{formData.phone}}" bindinput="onPhoneInput" maxlength="11" />
+    </view>
+    <!-- 地址输入 -->
+    <view class="form-item">
+      <text class="label required">家庭地址</text>
+      <input class="input" placeholder="请填写小区名称或详细地址" value="{{formData.locationAddress}}" bindinput="onLocationInput" maxlength="200" />
+    </view>
+    <!-- 年级选择 -->
+    <view class="form-item">
+      <text class="label required">孩子年级</text>
+      <picker mode="selector" range="{{grades}}" range-key="name" value="{{gradeIndex}}" bindchange="onGradeChange">
+        <view class="picker {{formData.gradeId ? '' : 'placeholder'}}">
+          {{grades[gradeIndex].name || '请选择年级'}}
+        </view>
+      </picker>
+    </view>
+    <!-- 科目选择 -->
+    <view class="form-item">
+      <text class="label required">补习科目</text>
+      <picker mode="selector" range="{{subjects}}" range-key="name" value="{{subjectIndex}}" bindchange="onSubjectChange">
+        <view class="picker {{formData.subjectId ? '' : 'placeholder'}}">
+          {{subjects[subjectIndex].name || '请选择补习科目'}}
+        </view>
+      </picker>
+    </view>
+    <!-- 价格显示 -->
+    <view class="price-section {{showPrice ? 'show' : ''}}">
+      <view class="price-card">
+        <text class="price-label">课时费标准</text>
+        <text class="price-value">¥{{currentPrice}}/小时</text>
+        <text class="price-note">此为平台标准课时费，具体以最终沟通为准</text>
+      </view>
+    </view>
+  </view>
+  <!-- 提交按钮 -->
+  <view class="submit-section">
+    <button class="submit-btn {{submitting || loading ? 'disabled' : ''}}" bindtap="submitDemand" disabled="{{submitting || loading}}">
+      {{submitting ? '提交中...' : '提交需求' }}
+    </button>
+    <view class="reset-section">
+      <text class="reset-text" bindtap="resetForm">重置表单</text>
+    </view>
+  </view>
+  <!-- 加载状态 -->
+  <view class="loading-mask" wx:if="{{loading}}">
+    <view class="loading-content">
+      <text>正在加载数据...</text>
+    </view>
+  </view>
+</view>

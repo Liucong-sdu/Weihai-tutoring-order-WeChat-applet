@@ -1,0 +1,76 @@
+<!--pages/demand/list.wxml-->
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="title">我的需求</text>
+  </view>
+
+  <!-- 需求列表 -->
+  <view class="demand-list" wx:if="{{demands.length > 0}}">
+    <view
+      class="demand-item"
+      wx:for="{{demands}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="viewDemandDetail"
+    >
+      <!-- 需求基本信息 -->
+      <view class="demand-header">
+        <view class="demand-info">
+          <text class="grade">{{item.grade.name}}</text>
+          <text class="subject">{{item.subject.name}}</text>
+          <text class="price">¥{{item.hourlyPrice}}/小时</text>
+        </view>
+        <view class="demand-status {{getStatusClass(item.status)}}">
+          {{getStatusText(item.status)}}
+        </view>
+      </view>
+
+      <!-- 需求详细信息 -->
+      <view class="demand-detail">
+        <view class="detail-item">
+          <text class="icon">📍</text>
+          <text class="text">{{item.locationAddress}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="icon">⏰</text>
+          <text class="text">{{formatTime(item.createdAt)}}</text>
+        </view>
+      </view>
+
+      <!-- 操作提示 -->
+      <view class="demand-hint">
+        <text wx:if="{{item.status === 'PENDING'}}">正在等待管理员处理</text>
+        <text wx:if="{{item.status === 'FOLLOWING_UP'}}">管理员正在跟进您的需求</text>
+        <text wx:if="{{item.status === 'MATCHED'}}">已为您匹配合适的家教老师</text>
+        <text wx:if="{{item.status === 'CLOSED'}}">需求已关闭</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!loading && demands.length === 0}}">
+    <view class="empty-icon">📋</view>
+    <text class="empty-title">暂无需求记录</text>
+    <text class="empty-desc">您还没有提交过任何家教需求</text>
+    <button class="empty-btn" bindtap="goToSubmit">去发布需求</button>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading-state" wx:if="{{loading}}">
+    <view class="loading-content">
+      <text>正在加载...</text>
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view class="load-more" wx:if="{{hasMore && !loading}}">
+    <view class="load-more-text" wx:if="{{!loadingMore}}">上拉加载更多</view>
+    <view class="load-more-text" wx:if="{{loadingMore}}">加载中...</view>
+  </view>
+
+  <!-- 没有更多了 -->
+  <view class="no-more" wx:if="{{!hasMore && demands.length > 0 && !loading}}">
+    <text>没有更多了</text>
+  </view>
+</view>
